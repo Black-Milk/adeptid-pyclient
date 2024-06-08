@@ -3,21 +3,7 @@ from pydantic import (
     BaseModel,
 )
 
-from adeptid.models.custom_types import Date
-
-
-class WorkHistory(BaseModel):
-    title: str
-    naics: Optional[str] = None
-    employer_name: Optional[str] = None
-    start_date: Optional[Date] = None
-    end_date: Optional[Date] = None
-
-
-class Candidate(BaseModel):
-    id: str
-    skills: List[str]
-    work_history: List[WorkHistory]
+from adeptid.models import Candidate
 
 
 class RecommendDestinationOccupationsRequest(BaseModel):

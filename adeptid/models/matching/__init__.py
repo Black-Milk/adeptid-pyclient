@@ -4,3 +4,5 @@ from .recommend_destination_occupations.request import (
 from .recommend_destination_occupations.response import (
     RecommendDestinationOccupationsResponse,
 )
+
+from .evaluate_candidates.request import EvaluateCandidatesRequest

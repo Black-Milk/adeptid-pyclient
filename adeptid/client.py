@@ -18,6 +18,7 @@ from models.matching.recommend_destination_occupations.request import (
     WorkHistory,
 )
 
+
 from pprint import pprint
 
 
