@@ -14,7 +14,7 @@ class Occupation(BaseModel):
     name: str
 
 
-class Gaps(BaseModel):
+class Gap(BaseModel):
     category: str
     name: str
     skill_category: str
@@ -22,13 +22,13 @@ class Gaps(BaseModel):
     value: float
 
 
-class Overlaps(Gaps):
+class Overlap(Gap):
     pass
 
 
 class Skills(BaseModel):
-    gaps: List[Gaps]
-    overlaps: List[Overlaps]
+    gaps: List[Gap]
+    overlaps: List[Overlap]
 
 
 class OccupationMatch(BaseModel):
@@ -38,7 +38,7 @@ class OccupationMatch(BaseModel):
     skills: Skills
 
 
-class RecommendDestinationOccupationResponse(BaseModel):
+class RecommendDestinationOccupationsResponse(BaseModel):
     candidates: Dict[CandidateID, List[OccupationMatch]]
     classifications: Dict[str, Occupation]
     operation_id: str

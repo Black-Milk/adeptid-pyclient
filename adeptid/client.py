@@ -7,11 +7,17 @@ from datetime import date
 import os
 from dotenv import load_dotenv
 from apiclient_pydantic import ModelDumped, serialize
-from models.matching import (
+
+from models import (
+    RecommendDestinationOccupationsResponse,
     RecommendDestinationOccupationsRequest,
+)
+
+from models.matching.recommend_destination_occupations.request import (
     Candidate,
     WorkHistory,
 )
+
 from pprint import pprint
 
 
@@ -64,7 +70,7 @@ class AdeptIDClient:
             )
             raise
 
-    @serialize()
+    @serialize(response=RecommendDestinationOccupationsResponse)
     async def recommend_destination_occupations(
         self, request_body: ModelDumped[RecommendDestinationOccupationsRequest]
     ):
