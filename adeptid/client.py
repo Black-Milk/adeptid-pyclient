@@ -6,12 +6,19 @@ from dotenv import load_dotenv
 from apiclient_pydantic import ModelDumped, serialize
 
 from models import (
-    RecommendDestinationOccupationsResponse,
+    EvaluateCandidatesRequest,
+    EvaluateCandidatesResponse,
+    RecommendSourceOccupationsRequest,
+    RecommendSourceOccupationsResponse,
     RecommendDestinationOccupationsRequest,
-    Candidate,
-    WorkHistory,
+    RecommendDestinationOccupationsResponse,
 )
 
+from models import (
+    recommend_destination_occupations_request_factory,
+    recommend_source_occupations_request_factory,
+    evaluate_candidates_request_factory,
+)
 
 from pprint import pprint
 
@@ -64,6 +71,14 @@ class AdeptIDClient:
             )
             raise
 
+    @serialize(response=EvaluateCandidatesResponse)
+    async def evaluate_candidates(
+        self, request_body: ModelDumped[EvaluateCandidatesRequest]
+    ):
+        endpoint = "/v2/evaluate-candidates"
+
+        return await self._request("POST", endpoint, json=request_body)
+
     @serialize(response=RecommendDestinationOccupationsResponse)
     async def recommend_destination_occupations(
         self, request_body: ModelDumped[RecommendDestinationOccupationsRequest]
@@ -72,42 +87,37 @@ class AdeptIDClient:
 
         return await self._request("POST", endpoint, json=request_body)
 
+    @serialize(response=RecommendSourceOccupationsResponse)
+    async def recommend_source_occupations(
+        self, request_body: ModelDumped[RecommendSourceOccupationsRequest]
+    ):
+        endpoint = "/v2/recommend-source-occupations"
+
+        return await self._request("POST", endpoint, json=request_body)
+
     async def close(self):
         await self.client.aclose()
 
 
-def prepare_request_body():
-    destination_occupation_payload = RecommendDestinationOccupationsRequest(
-        skill_count=5,
-        offset=1,
-        limit=10,
-        candidates=[
-            Candidate(
-                id="666",
-                skills=["Python", "JavaScript", "React"],
-                work_history=[
-                    WorkHistory(
-                        title="Software Engineer", employer_name="Google"
-                    ),
-                ],
-            )
-        ],
-    )
-    return destination_occupation_payload
+def request_factory_selector(endpoint: str):
+    match endpoint:
+        case "recommend_destination_occupations":
+            return recommend_destination_occupations_request_factory()
+        case "recommend_source_occupations":
+            return recommend_source_occupations_request_factory()
+        case "evaluate_candidates":
+            return evaluate_candidates_request_factory()
+        case _:
+            raise ValueError("Invalid endpoint")
 
 
-async def main(
-    request_body,
-):
+async def main(request_body):
     async with AdeptIDClient(api_key=os.getenv("ADEPT_IO_ID")) as adept_client:
         # Create a request body that satisfies the Pydantic model
-        response = await adept_client.recommend_destination_occupations(
-            request_body=request_body
-        )
-
+        response = await adept_client.recommend_source_occupations(request_body)
         pprint(response)
 
 
 if __name__ == "__main__":
-    request = prepare_request_body()
+    request = request_factory_selector("recommend_source_occupations")
     asyncio.run(main(request))

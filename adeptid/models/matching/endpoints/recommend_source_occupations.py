@@ -22,11 +22,9 @@ class WageStats(BaseModel):
 
 
 class TransferableSkill(BaseModel):
-    category: str
-    name: str
-    skill_category: str
-    skill_type: str
-    value: float
+    skill_name: str
+    skill_overlap_category: str
+    skill_transferable_value: float
 
 
 class SkillGap(BaseModel):
@@ -49,3 +47,15 @@ class DestinationOccupation(BaseModel):
 
 
 RecommendSourceOccupationsResponse = List[DestinationOccupation]
+
+
+def request_factory() -> RecommendSourceOccupationsRequest:
+    return RecommendSourceOccupationsRequest(
+        occupation_code="29-2052.00",
+        match_score_min=0.5,
+        skill_count=5,
+        offset=1,
+        limit=10,
+        occupation_subset="onet_simplified_2019",
+        occupation_taxonomy="onet_2019",
+    )
