@@ -1,4 +1,4 @@
-# Adept-ID Python Client 
+# AdeptID Python Client 
 
 
 This is a work in progress. 
