@@ -5,6 +5,7 @@ from pydantic import (
 
 from adeptid.models import Date
 
+
 CandidateID = Annotated[str, "Candidate ID"]
 
 

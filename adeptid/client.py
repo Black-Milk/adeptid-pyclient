@@ -1,9 +1,6 @@
 import httpx
 import asyncio
 import logging
-from pydantic import BaseModel
-from typing import List, Optional
-from datetime import date
 import os
 from dotenv import load_dotenv
 from apiclient_pydantic import ModelDumped, serialize
@@ -11,9 +8,6 @@ from apiclient_pydantic import ModelDumped, serialize
 from models import (
     RecommendDestinationOccupationsResponse,
     RecommendDestinationOccupationsRequest,
-)
-
-from models.matching.recommend_destination_occupations.request import (
     Candidate,
     WorkHistory,
 )
@@ -23,7 +17,6 @@ from pprint import pprint
 
 
 # placeholder for the AdeptIDClient class as a context manager
-from contextlib import aclosing
 
 load_dotenv(override=True)
 
