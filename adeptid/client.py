@@ -114,10 +114,12 @@ def request_factory_selector(endpoint: str):
 async def main(request_body):
     async with AdeptIDClient(api_key=os.getenv("ADEPT_IO_ID")) as adept_client:
         # Create a request body that satisfies the Pydantic model
-        response = await adept_client.evaluate_candidates(request_body)
+        response = await adept_client.recommend_destination_occupations(
+            request_body
+        )
         pprint(response)
 
 
 if __name__ == "__main__":
-    request = request_factory_selector("evaluate_candidates")
+    request = request_factory_selector("recommend_destination_occupations")
     asyncio.run(main(request))
