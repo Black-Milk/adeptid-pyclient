@@ -6,7 +6,7 @@ from pydantic import (
 from adeptid.models import (
     Candidate,
     Occupation,
-    OccupationMatch,
+    Skills,
     CandidateID,
     candidate_factory,
 )
@@ -24,8 +24,15 @@ class RecommendDestinationOccupationsRequest(BaseModel):
 Classifications = Dict[str, Occupation]
 
 
+class DestinationOccupationMatch(BaseModel):
+    match_score: float
+    match_score_category: str
+    occupation: Occupation
+    skills: Skills
+
+
 class RecommendDestinationOccupationsResponse(BaseModel):
-    candidates: Dict[CandidateID, List[OccupationMatch]]
+    candidates: Dict[CandidateID, List[DestinationOccupationMatch]]
     classifications: Classifications
     unknown_skills: List[str]
     operation_id: str

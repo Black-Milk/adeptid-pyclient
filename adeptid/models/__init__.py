@@ -6,7 +6,7 @@ from .matching.candidate import (
     Education,
     candidate_factory,
 )
-from .matching.occupation import OccupationMatch, Occupation, ONetCode
+from .matching.occupation import Occupation, ONetCode, Skills
 from .matching.endpoints import (
     RecommendDestinationOccupationsRequest,
     RecommendDestinationOccupationsResponse,

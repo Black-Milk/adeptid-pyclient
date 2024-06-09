@@ -27,10 +27,3 @@ class Overlap(Gap):
 class Skills(BaseModel):
     gaps: List[Gap]
     overlaps: List[Overlap]
-
-
-class OccupationMatch(BaseModel):
-    match_score: float
-    match_score_category: str
-    occupation: Occupation
-    skills: Skills

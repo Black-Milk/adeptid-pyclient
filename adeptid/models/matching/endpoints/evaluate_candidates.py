@@ -5,15 +5,10 @@ from adeptid.models import (
     DegreeType,
     Candidate,
     Occupation,
-    OccupationMatch,
+    Skills,
     CandidateID,
     candidate_factory,
 )
-
-
-CandidatesScores = Dict[CandidateID, List[OccupationMatch]]
-
-Classifications = Dict[str, Occupation]
 
 
 class DestinationEducation(BaseModel):
@@ -35,6 +30,17 @@ class EvaluateCandidatesRequest(BaseModel):
     skill_count: Optional[int]
     candidates: List[Candidate]
     destination_job: DestinationJob
+
+
+class OccupationMatch(BaseModel):
+    match_score: float
+    match_score_category: str
+    skills: Skills
+
+
+CandidatesScores = Dict[CandidateID, OccupationMatch]
+
+Classifications = Dict[str, Occupation]
 
 
 class EvaluateCandidatesResponse(BaseModel):
